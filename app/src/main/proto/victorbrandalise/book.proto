@@ -1,0 +1,8 @@
+syntax = "proto3";
+
+package com.victorbrandalise;
+
+message Book {
+  int64 id = 1;
+  string name = 2;
+}
