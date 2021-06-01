@@ -1,11 +1,15 @@
 package com.victorbrandalise
 
+import io.grpc.StatusException
 import io.grpc.android.AndroidChannelBuilder
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
 
-fun main() {
-    val scope = CoroutineScope
+val scope = CoroutineScope(Dispatchers.IO)
 
+fun main() {
     val channel = AndroidChannelBuilder
         .forAddress("127.0.0.1", 9090)
         .build()
@@ -33,5 +37,12 @@ fun main() {
         .build()
 
     val stub = BookstoreGrpcKt.BookstoreCoroutineStub(channel)
-    val a = stub.createBook(createBookRequest)
+
+    scope.launch {
+        try {
+            stub.createBook(createBookRequest)
+        } catch (e: StatusException) {
+            // handle exception
+        }
+    }
 }
