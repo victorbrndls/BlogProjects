@@ -2,7 +2,22 @@ syntax = "proto3";
 
 package com.victorbrandalise;
 
+service Bookstore {
+  rpc CreateBook(CreateBookRequest) returns (Book) {}
+  rpc ListBooks(ListBooksRequest) returns (ListBooksResponse) {}
+}
+
 message Book {
-  int64 id = 1;
-  string name = 2;
+  int32 id = 1;
+  string title = 2;
+}
+
+message CreateBookRequest {
+  Book book = 1;
+}
+
+message ListBooksRequest {}
+
+message ListBooksResponse {
+  repeated Book books = 1;
 }
