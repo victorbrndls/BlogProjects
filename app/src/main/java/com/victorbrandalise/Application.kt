@@ -8,6 +8,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.res.ResourcesCompat
 import com.victorbrandalise.presentation.HomeActivity
+import com.victorbrandalise.presentation.LockscreenActivity
 
 private const val CHANNEL_ID = "dgo_alerts"
 private const val CHANNEL_NAME = "DGO Notificações"
@@ -41,13 +42,19 @@ class Application : Application() {
         val contentPendingIntent =
             PendingIntent.getActivity(this, 0, contentIntent, 0)
 
+        val fullScreenIntent = Intent(this, LockscreenActivity::class.java)
+        val fullScreenPendingIntent =
+            PendingIntent.getActivity(this, 0, fullScreenIntent, 0)
+
         return NotificationCompat.Builder(this, CHANNEL_ID)
             .setSmallIcon(R.drawable.notifications_active_black_24)
             .setColor(ResourcesCompat.getColor(resources, R.color.purple_200, null))
             .setContentTitle("Heads Up Notification")
             .setAutoCancel(true)
             .setContentIntent(contentPendingIntent)
+            .setFullScreenIntent(fullScreenPendingIntent, true)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setCategory(NotificationCompat.CATEGORY_ALARM)
             .build()
     }
 

@@ -22,7 +22,10 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".presentation.LockscreenActivity" />
+        <activity
+            android:name=".presentation.LockscreenActivity"
+            android:launchMode="singleTop"
+            android:showOnLockScreen="true" />
 
     </application>
 

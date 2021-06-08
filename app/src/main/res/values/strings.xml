@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Victor Brandalise</string>
+
+    <string name="home_title">Home</string>
+
+    <string name="lockscreen_title">Lock Screen</string>
+    <string name="lockscreen_click_me">Click Me!</string>
+
 </resources>
