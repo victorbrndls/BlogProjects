@@ -1,13 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.victorbrandalise">
 
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
+
     <application
-        android:allowBackup="true"
+        android:name=".Application"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.VictorBrandalise" />
+        android:theme="@style/Theme.VictorBrandalise"
+        tools:ignore="AllowBackup">
+
+        <activity android:name=".presentation.HomeActivity" />
+
+        <activity
+            android:name=".presentation.LockscreenActivity"
+            android:launchMode="singleTop"
+            android:showOnLockScreen="true" />
+
+    </application>
 
 </manifest>
