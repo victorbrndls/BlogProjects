@@ -4,14 +4,15 @@ import android.app.*
 import android.app.Application
 import android.content.Intent
 import android.os.Build
+import android.os.Handler
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.res.ResourcesCompat
 import com.victorbrandalise.presentation.HomeActivity
 import com.victorbrandalise.presentation.LockscreenActivity
 
-private const val CHANNEL_ID = "dgo_alerts"
-private const val CHANNEL_NAME = "DGO Notificações"
+private const val CHANNEL_ID = "heads_up_alerts"
+private const val CHANNEL_NAME = "Heads Up Alerts"
 
 class Application : Application() {
 
