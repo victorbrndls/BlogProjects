@@ -9,7 +9,7 @@
         android:id="@+id/listFragment"
         android:name="com.victorbrandalise.presentation.list.ListFragment"
         android:label="ListFragment"
-        tools:layout="@layout/fragment_list">
+        tools:layout="@layout/fragment_item_list">
         <action
             android:id="@+id/action_listFragment_to_itemDetailFragment"
             app:destination="@id/itemDetailFragment" />
@@ -28,6 +28,6 @@
         android:id="@+id/itemDetailFragment"
         android:name="com.victorbrandalise.presentation.detail.ItemDetailFragment"
         android:label="ItemDetailFragment"
-        tools:layout="@layout/fragment_item_detail" />
+        tools:layout="@layout/layout_item_detail" />
 
 </navigation>
