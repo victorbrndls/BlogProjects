@@ -25,9 +25,9 @@ class ItemListViewModel : ViewModel() {
                 Uri.parse("https://m.media-amazon.com/images/I/51B4dMOp49L._AC_SS450_.jpg")
             ),
             Item(
-                "Basics Kitchen Rolling Microwave Cart on Wheels",
+                "Basics Kitchen Rolling",
                 "Microwave kitchen cart made of chrome-plated steel with removable wood top (1.5 inches)",
-                Uri.parse("https://images-na.ssl-images-amazon.com/images/G/01/apparel/rcxgs/tile._CB483369110_.gif")
+                Uri.parse("https://images-na.ssl-images-amazon.com/images/I/81cxPhqC0cL._AC_SL1500_.jpg")
             ),
             Item(
                 "Kitchen Knife",

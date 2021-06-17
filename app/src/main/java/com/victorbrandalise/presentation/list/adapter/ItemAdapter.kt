@@ -3,6 +3,7 @@ package com.victorbrandalise.presentation.list.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.victorbrandalise.databinding.LayoutItemDetailBinding
 import com.victorbrandalise.model.Item
 
@@ -48,7 +49,11 @@ class ItemViewHolder(
     fun bind(item: Item) = with(binding) {
         name.text = item.name
         description.text = item.description
-        icon.setImageURI(item.image)
+
+        Glide.with(root.context)
+            .load(item.image)
+            .circleCrop()
+            .into(icon)
     }
 
 }
