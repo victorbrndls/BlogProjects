@@ -7,14 +7,19 @@ import com.victorbrandalise.databinding.LayoutItemDetailBinding
 import com.victorbrandalise.model.Item
 
 class ItemAdapter(
-    items: List<Item>
+    items: List<Item>,
+    private val onClick: (Item) -> Unit
 ) : RecyclerView.Adapter<ItemViewHolder>() {
 
     private var items = items.toMutableList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        return ItemViewHolder(LayoutItemDetailBinding.inflate(inflater, parent, false))
+
+        val binding = LayoutItemDetailBinding.inflate(inflater, parent, false)
+        val onClick: (Int) -> Unit = { position -> onClick(items[position]) }
+
+        return ItemViewHolder(binding, onClick)
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
@@ -32,8 +37,13 @@ class ItemAdapter(
 }
 
 class ItemViewHolder(
-    private val binding: LayoutItemDetailBinding
+    private val binding: LayoutItemDetailBinding,
+    private val onClick: (Int) -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
+
+    init {
+        binding.root.setOnClickListener { onClick(adapterPosition) }
+    }
 
     fun bind(item: Item) = with(binding) {
         name.text = item.name

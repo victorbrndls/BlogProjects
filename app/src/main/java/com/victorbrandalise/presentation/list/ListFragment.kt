@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.victorbrandalise.databinding.FragmentItemListBinding
+import com.victorbrandalise.model.Item
 import com.victorbrandalise.presentation.list.adapter.ItemAdapter
 
 class ListFragment : Fragment() {
@@ -15,7 +16,7 @@ class ListFragment : Fragment() {
 
     private val viewModel by viewModels<ItemListViewModel>()
 
-    private val adapter by lazy { ItemAdapter(emptyList()) }
+    private val adapter by lazy { ItemAdapter(emptyList(), ::onItemClicked) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -39,6 +40,10 @@ class ListFragment : Fragment() {
         viewModel.items.observe(viewLifecycleOwner) { items ->
             adapter.setItems(items)
         }
+    }
+
+    private fun onItemClicked(item: Item) {
+
     }
 
 }
