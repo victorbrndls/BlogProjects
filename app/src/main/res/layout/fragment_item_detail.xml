@@ -8,11 +8,32 @@
     <View
         android:id="@+id/view"
         android:layout_width="wrap_content"
-        android:layout_height="96dp"
+        android:layout_height="0dp"
         android:background="?attr/colorPrimary"
+        app:layout_constraintBottom_toBottomOf="@+id/view2"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_default="spread"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/view2"
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        app:layout_constraintBottom_toBottomOf="@+id/icon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/icon" />
+
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="192dp"
+        android:layout_height="192dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
 
     <ImageView
         android:id="@+id/back"
@@ -24,16 +45,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/arrow_back_black_24"
         app:tint="@color/white" />
-
-    <ImageView
-        android:id="@+id/icon"
-        android:layout_width="192dp"
-        android:layout_height="192dp"
-        android:layout_marginTop="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/name"
@@ -62,6 +73,7 @@
         tools:text="Lorem Ipsum description" />
 
     <Button
+
         android:id="@+id/addToCart"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

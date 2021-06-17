@@ -30,12 +30,12 @@ class ItemListViewModel : ViewModel() {
             ),
             Item(
                 "Kitchen Knife",
-                "Custom knife set with mallee burr handles and neon green resin liner",
+                "A kitchen knife is any knife that is intended to be used in food preparation. While much of this work can be accomplished with a few general-purpose knives – notably a large chef's knife, a tough cleaver, a small paring knife and some sort of serrated blade – there are also many specialized knives that are designed for specific tasks.",
                 Uri.parse("https://images.unsplash.com/photo-1602063238855-524c4d8b9b18?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1084&q=80")
             ),
             Item(
                 "Charcoal",
-                "Highly durable. Up to 8hrs",
+                "Charcoal is a lightweight black carbon residue produced by strongly heating wood in minimal oxygen to remove all water and volatile constituents.",
                 Uri.parse("https://images.unsplash.com/photo-1613897807164-01263a2296e2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80")
             ),
         )

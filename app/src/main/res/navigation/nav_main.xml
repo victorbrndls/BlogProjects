@@ -14,7 +14,7 @@
             android:id="@+id/actionListToDetail"
             app:destination="@id/itemDetailFragment" />
         <action
-            android:id="@+id/action_listFragment_to_cartFragment2"
+            android:id="@+id/actionListToCart"
             app:destination="@id/cartFragment" />
     </fragment>
 

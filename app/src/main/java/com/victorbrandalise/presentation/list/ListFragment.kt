@@ -35,6 +35,10 @@ class ListFragment : Fragment() {
 
     private fun initViews() = with(binding) {
         items.adapter = adapter
+
+        cart.setOnClickListener {
+            findNavController().navigate(ListFragmentDirections.actionListToCart())
+        }
     }
 
     private fun observeViewModel() {
@@ -44,9 +48,7 @@ class ListFragment : Fragment() {
     }
 
     private fun onItemClicked(item: Item) {
-        findNavController().navigate(
-            ListFragmentDirections.actionListToDetail(item)
-        )
+        findNavController().navigate(ListFragmentDirections.actionListToDetail(item))
     }
 
 }
