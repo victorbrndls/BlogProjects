@@ -17,8 +17,7 @@ class ItemListViewModel : ViewModel() {
 
     private fun loadItems() {
         // Load fake items
-
-        _items.value = listOf(
+        val items = listOf(
             Item(
                 "Android Charger",
                 "The aluminum shell and the tangle-free braided nylon make the cable extremely durable! The nylon braid is more flexible, pull-resistant, soft and weighs less when being compared to traditional device cables.",
@@ -40,6 +39,8 @@ class ItemListViewModel : ViewModel() {
                 Uri.parse("https://images.unsplash.com/photo-1613897807164-01263a2296e2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80")
             ),
         )
+
+        _items.value = items + items + items
     }
 
 }

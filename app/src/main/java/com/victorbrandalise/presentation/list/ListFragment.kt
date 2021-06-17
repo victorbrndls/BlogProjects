@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.victorbrandalise.databinding.FragmentItemListBinding
 import com.victorbrandalise.model.Item
 import com.victorbrandalise.presentation.list.adapter.ItemAdapter
@@ -43,7 +44,9 @@ class ListFragment : Fragment() {
     }
 
     private fun onItemClicked(item: Item) {
-
+        findNavController().navigate(
+            ListFragmentDirections.actionListToDetail(item)
+        )
     }
 
 }
