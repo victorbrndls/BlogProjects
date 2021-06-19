@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
-import com.google.android.material.transition.MaterialFadeThrough
+import com.google.android.material.transition.platform.MaterialSharedAxis
 import com.victorbrandalise.databinding.FragmentItemDetailBinding
 import com.victorbrandalise.model.Item
 
@@ -21,8 +21,8 @@ class ItemDetailFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        enterTransition = MaterialFadeThrough()
-        exitTransition = MaterialFadeThrough()
+        enterTransition = MaterialSharedAxis(MaterialSharedAxis.Z, true)
+        returnTransition = MaterialSharedAxis(MaterialSharedAxis.Z, false)
     }
 
     override fun onCreateView(
