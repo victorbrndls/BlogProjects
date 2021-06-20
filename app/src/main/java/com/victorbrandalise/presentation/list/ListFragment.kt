@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.transition.MaterialElevationScale
 import com.victorbrandalise.R
 import com.victorbrandalise.databinding.FragmentItemListBinding
+import com.victorbrandalise.databinding.LayoutItemDetailBinding
 import com.victorbrandalise.model.Item
 import com.victorbrandalise.presentation.list.adapter.ItemAdapter
 
@@ -61,10 +62,11 @@ class ListFragment : Fragment() {
         }
     }
 
-    private fun onItemClicked(card: View, icon: View, item: Item) {
+    private fun onItemClicked(binding: LayoutItemDetailBinding, item: Item) {
         val extras = FragmentNavigatorExtras(
-            card to getString(R.string.item_detail_card_transition_name),
-            icon to getString(R.string.item_detail_icon_transition_name)
+            binding.icon to getString(R.string.item_detail_icon_transition_name),
+            binding.name to getString(R.string.item_detail_name_transition_name),
+            binding.description to getString(R.string.item_detail_description_transition_name)
         )
 
         findNavController().navigate(ListFragmentDirections.actionListToDetail(item), extras)
