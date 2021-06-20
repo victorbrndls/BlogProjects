@@ -7,8 +7,10 @@ import android.view.ViewGroup
 import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.transition.platform.MaterialSharedAxis
+import com.google.android.material.transition.MaterialElevationScale
+import com.victorbrandalise.R
 import com.victorbrandalise.databinding.FragmentItemListBinding
 import com.victorbrandalise.model.Item
 import com.victorbrandalise.presentation.list.adapter.ItemAdapter
@@ -23,6 +25,9 @@ class ListFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        exitTransition = MaterialElevationScale(false)
+        reenterTransition = MaterialElevationScale(true)
     }
 
     override fun onCreateView(
@@ -56,11 +61,13 @@ class ListFragment : Fragment() {
         }
     }
 
-    private fun onItemClicked(item: Item) {
-        exitTransition = MaterialSharedAxis(MaterialSharedAxis.Z, true)
-        reenterTransition = MaterialSharedAxis(MaterialSharedAxis.Z, false)
+    private fun onItemClicked(card: View, icon: View, item: Item) {
+        val extras = FragmentNavigatorExtras(
+            card to getString(R.string.item_detail_card_transition_name),
+            icon to getString(R.string.item_detail_icon_transition_name)
+        )
 
-        findNavController().navigate(ListFragmentDirections.actionListToDetail(item))
+        findNavController().navigate(ListFragmentDirections.actionListToDetail(item), extras)
     }
 
 }

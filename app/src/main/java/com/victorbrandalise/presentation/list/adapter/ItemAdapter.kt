@@ -1,15 +1,18 @@
 package com.victorbrandalise.presentation.list.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.victorbrandalise.R
 import com.victorbrandalise.databinding.LayoutItemDetailBinding
 import com.victorbrandalise.model.Item
+import kotlin.math.absoluteValue
 
 class ItemAdapter(
     items: List<Item>,
-    private val onClick: (Item) -> Unit
+    private val onClick: (View, View, Item) -> Unit
 ) : RecyclerView.Adapter<ItemViewHolder>() {
 
     private var items = items.toMutableList()
@@ -18,7 +21,7 @@ class ItemAdapter(
         val inflater = LayoutInflater.from(parent.context)
 
         val binding = LayoutItemDetailBinding.inflate(inflater, parent, false)
-        val onClick: (Int) -> Unit = { position -> onClick(items[position]) }
+        val onClick: (Int) -> Unit = { position -> onClick(binding.root, binding.icon, items[position]) }
 
         return ItemViewHolder(binding, onClick)
     }
@@ -42,11 +45,18 @@ class ItemViewHolder(
     private val onClick: (Int) -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
 
+    private val context = binding.root.context
+
     init {
         binding.root.setOnClickListener { onClick(adapterPosition) }
     }
 
     fun bind(item: Item) = with(binding) {
+        binding.root.transitionName =
+            context.getString(R.string.item_card_transition_name, layoutPosition)
+        binding.icon.transitionName =
+            context.getString(R.string.item_icon_transition_name, layoutPosition)
+
         name.text = item.name
         description.text = item.description
 

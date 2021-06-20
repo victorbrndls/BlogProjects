@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Victor Brandalise</string>
+
+    <string name="item_card_transition_name">item_card_transition_name_%d</string>
+    <string name="item_detail_card_transition_name">item_detail_card_transition_name</string>
+
+    <string name="item_icon_transition_name">item_icon_transition_name_%d</string>
+    <string name="item_detail_icon_transition_name">item_detail_icon_transition_name</string>
+
 </resources>
