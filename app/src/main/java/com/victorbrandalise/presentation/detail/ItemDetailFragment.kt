@@ -12,6 +12,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.transition.ArcMotion
 import com.bumptech.glide.Glide
 import com.google.android.material.transition.MaterialContainerTransform
+import com.google.android.material.transition.MaterialFadeThrough
 import com.victorbrandalise.R
 import com.victorbrandalise.databinding.FragmentItemDetailBinding
 import com.victorbrandalise.model.Item
@@ -25,6 +26,9 @@ class ItemDetailFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        enterTransition = MaterialFadeThrough().apply {
+            removeTarget(R.id.icon)
+        }
         sharedElementEnterTransition = MaterialContainerTransform().apply {
             drawingViewId = R.id.navHostController
             setPathMotion(ArcMotion())
