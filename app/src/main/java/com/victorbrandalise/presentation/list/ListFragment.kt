@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.transition.MaterialElevationScale
+import com.google.android.material.transition.MaterialSharedAxis
 import com.victorbrandalise.R
 import com.victorbrandalise.databinding.FragmentItemListBinding
 import com.victorbrandalise.databinding.LayoutItemDetailBinding
@@ -27,8 +27,8 @@ class ListFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        exitTransition = MaterialElevationScale(false)
-        reenterTransition = MaterialElevationScale(true)
+        exitTransition = MaterialSharedAxis(MaterialSharedAxis.Z, false)
+        reenterTransition = MaterialSharedAxis(MaterialSharedAxis.Z, true)
     }
 
     override fun onCreateView(
