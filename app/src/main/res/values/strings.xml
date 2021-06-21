@@ -5,10 +5,4 @@
     <string name="item_icon_transition_name">item_icon_transition_name_%d</string>
     <string name="item_detail_icon_transition_name">item_detail_icon_transition_name</string>
 
-    <string name="item_name_transition_name">item_name_transition_name_%d</string>
-    <string name="item_detail_name_transition_name">item_detail_name_transition_name</string>
-
-    <string name="item_description_transition_name">item_description_transition_name_%d</string>
-    <string name="item_detail_description_transition_name">item_detail_description_transition_name</string>
-
 </resources>

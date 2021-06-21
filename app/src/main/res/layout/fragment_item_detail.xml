@@ -57,7 +57,6 @@
         android:gravity="center_horizontal"
         android:textColor="#CC000000"
         android:textSize="20sp"
-        android:transitionName="@string/item_detail_name_transition_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/icon"
@@ -69,14 +68,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:gravity="center_horizontal"
-        android:transitionName="@string/item_detail_description_transition_name"
         app:layout_constraintEnd_toEndOf="@+id/name"
         app:layout_constraintStart_toStartOf="@+id/name"
         app:layout_constraintTop_toBottomOf="@+id/name"
         tools:text="Lorem Ipsum description" />
 
     <Button
-
         android:id="@+id/addToCart"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

@@ -52,10 +52,6 @@ class ItemViewHolder(
     fun bind(item: Item) = with(binding) {
         binding.icon.transitionName =
             context.getString(R.string.item_icon_transition_name, layoutPosition)
-        binding.name.transitionName =
-            context.getString(R.string.item_name_transition_name, layoutPosition)
-        binding.description.transitionName =
-            context.getString(R.string.item_description_transition_name, layoutPosition)
 
         name.text = item.name
         description.text = item.description
