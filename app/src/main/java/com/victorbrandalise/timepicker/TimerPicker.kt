@@ -14,7 +14,6 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.Layout
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -30,6 +29,10 @@ private val selectedColor = Color(104, 220, 255, 255)
 
 @Composable
 fun TimerPicker() {
+    var selectedPart by remember { mutableStateOf(TimePart.Hour) }
+    var selectedHour by remember { mutableStateOf(0) }
+    var selectedMinute by remember { mutableStateOf(0) }
+
     Column(
         modifier = Modifier
             .background(
@@ -48,11 +51,17 @@ fun TimerPicker() {
             CompositionLocalProvider(LocalContentColor provides Color.White) {
                 Card(
                     shape = RoundedCornerShape(6.dp),
-                    backgroundColor = secondaryColor,
+                    backgroundColor = if (selectedPart == TimePart.Hour) selectedColor else secondaryColor,
+                    modifier = Modifier.clickable { selectedPart = TimePart.Hour }
                 ) {
+                    val hour by remember {
+                        derivedStateOf { if (selectedHour == 0) "00" else selectedHour.toString() }
+                    }
+
                     Text(
-                        text = "20",
+                        text = hour,
                         fontSize = 26.sp,
+                        color = if (selectedPart == TimePart.Hour) secondaryColor else Color.White,
                         modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp)
                     )
                 }
@@ -65,11 +74,17 @@ fun TimerPicker() {
 
                 Card(
                     shape = RoundedCornerShape(6.dp),
-                    backgroundColor = primaryColor,
+                    backgroundColor = if (selectedPart == TimePart.Minute) selectedColor else secondaryColor,
+                    modifier = Modifier.clickable { selectedPart = TimePart.Minute }
                 ) {
+                    val minute by remember {
+                        derivedStateOf { if (selectedMinute == 0) "00" else selectedMinute.toString() }
+                    }
+
                     Text(
-                        text = "00",
+                        text = minute,
                         fontSize = 26.sp,
+                        color = if (selectedPart == TimePart.Minute) secondaryColor else Color.White,
                         modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp)
                     )
                 }
@@ -78,11 +93,11 @@ fun TimerPicker() {
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        var selectedHour by remember { mutableStateOf(0) }
-
         Clock(
-            hour = selectedHour,
-            onHour = { selectedHour = it },
+            time = if (selectedPart == TimePart.Hour) selectedHour else selectedMinute,
+            onTime = {
+                if (selectedPart == TimePart.Hour) selectedHour = it else selectedMinute = it
+            },
             modifier = Modifier
                 .size(190.dp)
                 .align(Alignment.CenterHorizontally)
@@ -134,8 +149,8 @@ fun TimerPicker() {
 
 @Composable
 fun Clock(
-    hour: Int,
-    onHour: (Int) -> Unit,
+    time: Int,
+    onTime: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     var radiusPx by remember { mutableStateOf(0) }
@@ -148,30 +163,30 @@ fun Clock(
         ((if (hour < 12) radiusPx else radiusInsidePx) * sin(angleForHour(hour))).toInt()
 
     val content = @Composable {
-        Hour(text = "00", hour = 0, isSelected = hour == 0, onHour = onHour)
-        Hour(text = "1", hour = 1, isSelected = hour == 1, onHour = onHour)
-        Hour(text = "2", hour = 2, isSelected = hour == 2, onHour = onHour)
-        Hour(text = "3", hour = 3, isSelected = hour == 3, onHour = onHour)
-        Hour(text = "4", hour = 4, isSelected = hour == 4, onHour = onHour)
-        Hour(text = "5", hour = 5, isSelected = hour == 5, onHour = onHour)
-        Hour(text = "6", hour = 6, isSelected = hour == 6, onHour = onHour)
-        Hour(text = "7", hour = 7, isSelected = hour == 7, onHour = onHour)
-        Hour(text = "8", hour = 8, isSelected = hour == 8, onHour = onHour)
-        Hour(text = "9", hour = 9, isSelected = hour == 9, onHour = onHour)
-        Hour(text = "10", hour = 10, isSelected = hour == 10, onHour = onHour)
-        Hour(text = "11", hour = 11, isSelected = hour == 11, onHour = onHour)
-        Hour(text = "12", hour = 12, isSelected = hour == 12, onHour = onHour)
-        Hour(text = "13", hour = 13, isSelected = hour == 13, onHour = onHour)
-        Hour(text = "14", hour = 14, isSelected = hour == 14, onHour = onHour)
-        Hour(text = "15", hour = 15, isSelected = hour == 15, onHour = onHour)
-        Hour(text = "16", hour = 16, isSelected = hour == 16, onHour = onHour)
-        Hour(text = "17", hour = 17, isSelected = hour == 17, onHour = onHour)
-        Hour(text = "18", hour = 18, isSelected = hour == 18, onHour = onHour)
-        Hour(text = "19", hour = 19, isSelected = hour == 19, onHour = onHour)
-        Hour(text = "20", hour = 20, isSelected = hour == 20, onHour = onHour)
-        Hour(text = "21", hour = 21, isSelected = hour == 21, onHour = onHour)
-        Hour(text = "22", hour = 22, isSelected = hour == 22, onHour = onHour)
-        Hour(text = "23", hour = 23, isSelected = hour == 23, onHour = onHour)
+        Hour(text = "00", hour = 0, isSelected = time == 0, onHour = onTime)
+        Hour(text = "1", hour = 1, isSelected = time == 1, onHour = onTime)
+        Hour(text = "2", hour = 2, isSelected = time == 2, onHour = onTime)
+        Hour(text = "3", hour = 3, isSelected = time == 3, onHour = onTime)
+        Hour(text = "4", hour = 4, isSelected = time == 4, onHour = onTime)
+        Hour(text = "5", hour = 5, isSelected = time == 5, onHour = onTime)
+        Hour(text = "6", hour = 6, isSelected = time == 6, onHour = onTime)
+        Hour(text = "7", hour = 7, isSelected = time == 7, onHour = onTime)
+        Hour(text = "8", hour = 8, isSelected = time == 8, onHour = onTime)
+        Hour(text = "9", hour = 9, isSelected = time == 9, onHour = onTime)
+        Hour(text = "10", hour = 10, isSelected = time == 10, onHour = onTime)
+        Hour(text = "11", hour = 11, isSelected = time == 11, onHour = onTime)
+        Hour(text = "12", hour = 12, isSelected = time == 12, onHour = onTime)
+        Hour(text = "13", hour = 13, isSelected = time == 13, onHour = onTime)
+        Hour(text = "14", hour = 14, isSelected = time == 14, onHour = onTime)
+        Hour(text = "15", hour = 15, isSelected = time == 15, onHour = onTime)
+        Hour(text = "16", hour = 16, isSelected = time == 16, onHour = onTime)
+        Hour(text = "17", hour = 17, isSelected = time == 17, onHour = onTime)
+        Hour(text = "18", hour = 18, isSelected = time == 18, onHour = onTime)
+        Hour(text = "19", hour = 19, isSelected = time == 19, onHour = onTime)
+        Hour(text = "20", hour = 20, isSelected = time == 20, onHour = onTime)
+        Hour(text = "21", hour = 21, isSelected = time == 21, onHour = onTime)
+        Hour(text = "22", hour = 22, isSelected = time == 22, onHour = onTime)
+        Hour(text = "23", hour = 23, isSelected = time == 23, onHour = onTime)
 //        Hour(text = "XII", hour = 0, onHour = { selectedHour = it })
 //        Hour(text = "I", hour = 1, onHour = { selectedHour = it })
 //        Hour(text = "II", hour = 2, onHour = { selectedHour = it })
@@ -214,8 +229,8 @@ fun Clock(
                 .padding(padding)
                 .drawBehind {
                     val end = Offset(
-                        x = size.width / 2 + posX(hour),
-                        y = size.height / 2 + posY(hour)
+                        x = size.width / 2 + posX(time),
+                        y = size.height / 2 + posY(time)
                     )
 
                     drawCircle(
@@ -277,6 +292,8 @@ fun Hour(
         )
     )
 }
+
+enum class TimePart { Hour, Minute }
 
 private const val step = PI * 2 / 12
 private fun angleForHour(hour: Int) = -PI / 2 + step * hour
