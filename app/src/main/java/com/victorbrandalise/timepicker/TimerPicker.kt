@@ -1,16 +1,290 @@
 package com.victorbrandalise.timepicker
 
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.Layout
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import kotlin.math.PI
+import kotlin.math.cos
+import kotlin.math.sin
+
+private val backgroundColor = Color(49, 52, 58)
+private val primaryColor = Color(68, 71, 70)
+private val secondaryColor = Color(68, 71, 70)
+private val selectedColor = Color(104, 220, 255, 255)
 
 @Composable
 fun TimerPicker() {
-    Text(text = "hello")
+    Column(
+        modifier = Modifier
+            .background(
+                color = backgroundColor,
+                shape = RoundedCornerShape(16.dp)
+            )
+            .padding(16.dp)
+    ) {
+        Text(text = "Select time", color = Color.White)
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        Row(
+            modifier = Modifier.align(Alignment.CenterHorizontally)
+        ) {
+            CompositionLocalProvider(LocalContentColor provides Color.White) {
+                Card(
+                    shape = RoundedCornerShape(6.dp),
+                    backgroundColor = secondaryColor,
+                ) {
+                    Text(
+                        text = "20",
+                        fontSize = 26.sp,
+                        modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp)
+                    )
+                }
+
+                Text(
+                    text = ":",
+                    fontSize = 26.sp,
+                    modifier = Modifier.padding(horizontal = 2.dp)
+                )
+
+                Card(
+                    shape = RoundedCornerShape(6.dp),
+                    backgroundColor = primaryColor,
+                ) {
+                    Text(
+                        text = "00",
+                        fontSize = 26.sp,
+                        modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp)
+                    )
+                }
+            }
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        var selectedHour by remember { mutableStateOf(0) }
+
+        Clock(
+            hour = selectedHour,
+            onHour = { selectedHour = it },
+            modifier = Modifier
+                .size(190.dp)
+                .align(Alignment.CenterHorizontally)
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Row(
+            horizontalArrangement = Arrangement.End,
+            modifier = Modifier.width(IntrinsicSize.Min)
+        ) {
+//            IconButton(onClick = { /*TODO*/ }) {
+//                Icon(
+//                    painter = painterResource(id = R.drawable.baseline_keyboard_black_24),
+//                    contentDescription = "Keyboard"
+//                )
+//            }
+
+            Spacer(modifier = Modifier.weight(1f, fill = false))
+
+            TextButton(
+                onClick = { /*TODO*/ },
+                modifier = Modifier
+                    .width(56.dp)
+                    .height(32.dp)
+            ) {
+                Text(
+                    text = "Cancel",
+                    fontSize = 10.sp,
+                    color = selectedColor,
+                )
+            }
+            TextButton(
+                onClick = { /*TODO*/ },
+                modifier = Modifier
+                    .width(36.dp)
+                    .height(32.dp)
+            ) {
+                Text(
+                    text = "OK",
+                    fontSize = 10.sp,
+                    color = selectedColor
+                )
+            }
+        }
+
+    }
 }
 
-@Preview
+@Composable
+fun Clock(
+    hour: Int,
+    onHour: (Int) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    var radiusPx by remember { mutableStateOf(0) }
+    var radiusInsidePx by remember { mutableStateOf(0) }
+
+    fun posX(hour: Int) =
+        ((if (hour < 12) radiusPx else radiusInsidePx) * cos(angleForHour(hour))).toInt()
+
+    fun posY(hour: Int) =
+        ((if (hour < 12) radiusPx else radiusInsidePx) * sin(angleForHour(hour))).toInt()
+
+    val content = @Composable {
+        Hour(text = "00", hour = 0, isSelected = hour == 0, onHour = onHour)
+        Hour(text = "1", hour = 1, isSelected = hour == 1, onHour = onHour)
+        Hour(text = "2", hour = 2, isSelected = hour == 2, onHour = onHour)
+        Hour(text = "3", hour = 3, isSelected = hour == 3, onHour = onHour)
+        Hour(text = "4", hour = 4, isSelected = hour == 4, onHour = onHour)
+        Hour(text = "5", hour = 5, isSelected = hour == 5, onHour = onHour)
+        Hour(text = "6", hour = 6, isSelected = hour == 6, onHour = onHour)
+        Hour(text = "7", hour = 7, isSelected = hour == 7, onHour = onHour)
+        Hour(text = "8", hour = 8, isSelected = hour == 8, onHour = onHour)
+        Hour(text = "9", hour = 9, isSelected = hour == 9, onHour = onHour)
+        Hour(text = "10", hour = 10, isSelected = hour == 10, onHour = onHour)
+        Hour(text = "11", hour = 11, isSelected = hour == 11, onHour = onHour)
+        Hour(text = "12", hour = 12, isSelected = hour == 12, onHour = onHour)
+        Hour(text = "13", hour = 13, isSelected = hour == 13, onHour = onHour)
+        Hour(text = "14", hour = 14, isSelected = hour == 14, onHour = onHour)
+        Hour(text = "15", hour = 15, isSelected = hour == 15, onHour = onHour)
+        Hour(text = "16", hour = 16, isSelected = hour == 16, onHour = onHour)
+        Hour(text = "17", hour = 17, isSelected = hour == 17, onHour = onHour)
+        Hour(text = "18", hour = 18, isSelected = hour == 18, onHour = onHour)
+        Hour(text = "19", hour = 19, isSelected = hour == 19, onHour = onHour)
+        Hour(text = "20", hour = 20, isSelected = hour == 20, onHour = onHour)
+        Hour(text = "21", hour = 21, isSelected = hour == 21, onHour = onHour)
+        Hour(text = "22", hour = 22, isSelected = hour == 22, onHour = onHour)
+        Hour(text = "23", hour = 23, isSelected = hour == 23, onHour = onHour)
+//        Hour(text = "XII", hour = 0, onHour = { selectedHour = it })
+//        Hour(text = "I", hour = 1, onHour = { selectedHour = it })
+//        Hour(text = "II", hour = 2, onHour = { selectedHour = it })
+//        Hour(text = "III", hour = 3, onHour = { selectedHour = it })
+//        Hour(text = "IV", hour = 4, onHour = { selectedHour = it })
+//        Hour(text = "V", hour = 5, onHour = { selectedHour = it })
+//        Hour(text = "VI", hour = 6, onHour = { selectedHour = it })
+//        Hour(text = "VII", hour = 7, onHour = { selectedHour = it })
+//        Hour(text = "VIII", hour = 8, onHour = { selectedHour = it })
+//        Hour(text = "IX", hour = 9, onHour = { selectedHour = it })
+//        Hour(text = "X", hour = 10, onHour = { selectedHour = it })
+//        Hour(text = "XI", hour = 11, onHour = { selectedHour = it })
+//        Hour(text = "XII", hour = 12, onHour = { selectedHour = it })
+//        Hour(text = "I", hour = 13, onHour = { selectedHour = it })
+//        Hour(text = "II", hour = 14, onHour = { selectedHour = it })
+//        Hour(text = "III", hour = 15, onHour = { selectedHour = it })
+//        Hour(text = "IV", hour = 16, onHour = { selectedHour = it })
+//        Hour(text = "V", hour = 17, onHour = { selectedHour = it })
+//        Hour(text = "VI", hour = 18, onHour = { selectedHour = it })
+//        Hour(text = "VII", hour = 19, onHour = { selectedHour = it })
+//        Hour(text = "VIII", hour = 20, onHour = { selectedHour = it })
+//        Hour(text = "IX", hour = 21, onHour = { selectedHour = it })
+//        Hour(text = "X", hour = 22, onHour = { selectedHour = it })
+//        Hour(text = "XI", hour = 23, onHour = { selectedHour = it })
+    }
+
+    Box(modifier = modifier) {
+        Surface(
+            color = primaryColor,
+            shape = CircleShape,
+            modifier = Modifier.fillMaxSize()
+        ) {}
+
+        val padding = 4.dp
+        val hourCirclePx = 36f
+
+        Layout(
+            content = content,
+            modifier = Modifier
+                .padding(padding)
+                .drawBehind {
+                    val end = Offset(
+                        x = size.width / 2 + posX(hour),
+                        y = size.height / 2 + posY(hour)
+                    )
+
+                    drawCircle(
+                        radius = 9f,
+                        color = selectedColor,
+                    )
+
+                    drawLine(
+                        start = center,
+                        end = end,
+                        color = selectedColor,
+                        strokeWidth = 4f
+                    )
+
+                    drawCircle(
+                        radius = hourCirclePx,
+                        center = end,
+                        color = selectedColor,
+                    )
+                }
+        ) { measurables, constraints ->
+            val placeables = measurables.map {
+                it.measure(constraints)
+            }
+            assert(placeables.count() == 24) { "Missing hours: should be 24, is ${placeables.count()}" }
+
+            layout(constraints.maxWidth, constraints.maxHeight) {
+                val size = constraints.maxWidth
+                val maxSize = maxOf(placeables.maxOf { it.width }, placeables.maxOf { it.height })
+
+                radiusPx = (constraints.maxWidth - maxSize) / 2
+                radiusInsidePx = (radiusPx * 0.67).toInt()
+
+                placeables.forEachIndexed { index, placeable ->
+                    placeable.place(
+                        size / 2 - placeable.width / 2 + posX(index),
+                        size / 2 - placeable.height / 2 + posY(index),
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun Hour(
+    text: String,
+    hour: Int,
+    isSelected: Boolean,
+    onHour: (Int) -> Unit
+) {
+    Text(
+        text = text,
+        color = if (isSelected) secondaryColor else Color.White,
+        modifier = Modifier.clickable(
+            interactionSource = remember { MutableInteractionSource() },
+            indication = null,
+            onClick = { onHour(hour) }
+        )
+    )
+}
+
+private const val step = PI * 2 / 12
+private fun angleForHour(hour: Int) = -PI / 2 + step * hour
+
+@Preview(device = Devices.PIXEL_4, showSystemUi = true)
 @Composable
 fun TimerPickerPreview() {
-    TimerPicker()
+    Box(contentAlignment = Alignment.Center) {
+        TimerPicker()
+    }
 }
