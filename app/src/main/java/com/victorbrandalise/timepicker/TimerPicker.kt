@@ -30,8 +30,16 @@ private val selectedColor = Color(104, 220, 255, 255)
 @Composable
 fun TimerPicker() {
     var selectedPart by remember { mutableStateOf(TimePart.Hour) }
+
     var selectedHour by remember { mutableStateOf(0) }
     var selectedMinute by remember { mutableStateOf(0) }
+    val selectedTime by remember {
+        derivedStateOf { if (selectedPart == TimePart.Hour) selectedHour else selectedMinute / 5 }
+    }
+
+    val onTime: (Int) -> Unit = remember {
+        { if (selectedPart == TimePart.Hour) selectedHour = it else selectedMinute = it * 5 }
+    }
 
     Column(
         modifier = Modifier
@@ -94,14 +102,75 @@ fun TimerPicker() {
         Spacer(modifier = Modifier.height(16.dp))
 
         Clock(
-            time = if (selectedPart == TimePart.Hour) selectedHour else selectedMinute,
-            onTime = {
-                if (selectedPart == TimePart.Hour) selectedHour = it else selectedMinute = it
-            },
+            time = selectedTime,
             modifier = Modifier
                 .size(190.dp)
                 .align(Alignment.CenterHorizontally)
-        )
+        ) {
+            if (selectedPart == TimePart.Hour) {
+                Mark(text = "00", index = 0, isSelected = selectedTime == 0, onIndex = onTime)
+                Mark(text = "1", index = 1, isSelected = selectedTime == 1, onIndex = onTime)
+                Mark(text = "2", index = 2, isSelected = selectedTime == 2, onIndex = onTime)
+                Mark(text = "3", index = 3, isSelected = selectedTime == 3, onIndex = onTime)
+                Mark(text = "4", index = 4, isSelected = selectedTime == 4, onIndex = onTime)
+                Mark(text = "5", index = 5, isSelected = selectedTime == 5, onIndex = onTime)
+                Mark(text = "6", index = 6, isSelected = selectedTime == 6, onIndex = onTime)
+                Mark(text = "7", index = 7, isSelected = selectedTime == 7, onIndex = onTime)
+                Mark(text = "8", index = 8, isSelected = selectedTime == 8, onIndex = onTime)
+                Mark(text = "9", index = 9, isSelected = selectedTime == 9, onIndex = onTime)
+                Mark(text = "10", index = 10, isSelected = selectedTime == 10, onIndex = onTime)
+                Mark(text = "11", index = 11, isSelected = selectedTime == 11, onIndex = onTime)
+                Mark(text = "12", index = 12, isSelected = selectedTime == 12, onIndex = onTime)
+                Mark(text = "13", index = 13, isSelected = selectedTime == 13, onIndex = onTime)
+                Mark(text = "14", index = 14, isSelected = selectedTime == 14, onIndex = onTime)
+                Mark(text = "15", index = 15, isSelected = selectedTime == 15, onIndex = onTime)
+                Mark(text = "16", index = 16, isSelected = selectedTime == 16, onIndex = onTime)
+                Mark(text = "17", index = 17, isSelected = selectedTime == 17, onIndex = onTime)
+                Mark(text = "18", index = 18, isSelected = selectedTime == 18, onIndex = onTime)
+                Mark(text = "19", index = 19, isSelected = selectedTime == 19, onIndex = onTime)
+                Mark(text = "20", index = 20, isSelected = selectedTime == 20, onIndex = onTime)
+                Mark(text = "21", index = 21, isSelected = selectedTime == 21, onIndex = onTime)
+                Mark(text = "22", index = 22, isSelected = selectedTime == 22, onIndex = onTime)
+                Mark(text = "23", index = 23, isSelected = selectedTime == 23, onIndex = onTime)
+            } else {
+                Mark(text = "00", index = 0, isSelected = selectedTime == 0, onIndex = onTime)
+                Mark(text = "05", index = 1, isSelected = selectedTime == 1, onIndex = onTime)
+                Mark(text = "10", index = 2, isSelected = selectedTime == 2, onIndex = onTime)
+                Mark(text = "15", index = 3, isSelected = selectedTime == 3, onIndex = onTime)
+                Mark(text = "20", index = 4, isSelected = selectedTime == 4, onIndex = onTime)
+                Mark(text = "25", index = 5, isSelected = selectedTime == 5, onIndex = onTime)
+                Mark(text = "30", index = 6, isSelected = selectedTime == 6, onIndex = onTime)
+                Mark(text = "35", index = 7, isSelected = selectedTime == 7, onIndex = onTime)
+                Mark(text = "40", index = 8, isSelected = selectedTime == 8, onIndex = onTime)
+                Mark(text = "45", index = 9, isSelected = selectedTime == 9, onIndex = onTime)
+                Mark(text = "50", index = 10, isSelected = selectedTime == 10, onIndex = onTime)
+                Mark(text = "55", index = 11, isSelected = selectedTime == 11, onIndex = onTime)
+            }
+//        Hour(text = "XII", hour = 0, onHour = { selectedHour = it })
+//        Hour(text = "I", hour = 1, onHour = { selectedHour = it })
+//        Hour(text = "II", hour = 2, onHour = { selectedHour = it })
+//        Hour(text = "III", hour = 3, onHour = { selectedHour = it })
+//        Hour(text = "IV", hour = 4, onHour = { selectedHour = it })
+//        Hour(text = "V", hour = 5, onHour = { selectedHour = it })
+//        Hour(text = "VI", hour = 6, onHour = { selectedHour = it })
+//        Hour(text = "VII", hour = 7, onHour = { selectedHour = it })
+//        Hour(text = "VIII", hour = 8, onHour = { selectedHour = it })
+//        Hour(text = "IX", hour = 9, onHour = { selectedHour = it })
+//        Hour(text = "X", hour = 10, onHour = { selectedHour = it })
+//        Hour(text = "XI", hour = 11, onHour = { selectedHour = it })
+//        Hour(text = "XII", hour = 12, onHour = { selectedHour = it })
+//        Hour(text = "I", hour = 13, onHour = { selectedHour = it })
+//        Hour(text = "II", hour = 14, onHour = { selectedHour = it })
+//        Hour(text = "III", hour = 15, onHour = { selectedHour = it })
+//        Hour(text = "IV", hour = 16, onHour = { selectedHour = it })
+//        Hour(text = "V", hour = 17, onHour = { selectedHour = it })
+//        Hour(text = "VI", hour = 18, onHour = { selectedHour = it })
+//        Hour(text = "VII", hour = 19, onHour = { selectedHour = it })
+//        Hour(text = "VIII", hour = 20, onHour = { selectedHour = it })
+//        Hour(text = "IX", hour = 21, onHour = { selectedHour = it })
+//        Hour(text = "X", hour = 22, onHour = { selectedHour = it })
+//        Hour(text = "XI", hour = 23, onHour = { selectedHour = it })
+        }
 
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -141,68 +210,17 @@ fun TimerPicker() {
 @Composable
 fun Clock(
     time: Int,
-    onTime: (Int) -> Unit,
     modifier: Modifier = Modifier,
+    content: @Composable () -> Unit
 ) {
     var radiusPx by remember { mutableStateOf(0) }
     var radiusInsidePx by remember { mutableStateOf(0) }
 
-    fun posX(hour: Int) =
-        ((if (hour < 12) radiusPx else radiusInsidePx) * cos(angleForHour(hour))).toInt()
+    fun posX(index: Int) =
+        ((if (index < 12) radiusPx else radiusInsidePx) * cos(angleForIndex(index))).toInt()
 
-    fun posY(hour: Int) =
-        ((if (hour < 12) radiusPx else radiusInsidePx) * sin(angleForHour(hour))).toInt()
-
-    val content = @Composable {
-        Hour(text = "00", hour = 0, isSelected = time == 0, onHour = onTime)
-        Hour(text = "1", hour = 1, isSelected = time == 1, onHour = onTime)
-        Hour(text = "2", hour = 2, isSelected = time == 2, onHour = onTime)
-        Hour(text = "3", hour = 3, isSelected = time == 3, onHour = onTime)
-        Hour(text = "4", hour = 4, isSelected = time == 4, onHour = onTime)
-        Hour(text = "5", hour = 5, isSelected = time == 5, onHour = onTime)
-        Hour(text = "6", hour = 6, isSelected = time == 6, onHour = onTime)
-        Hour(text = "7", hour = 7, isSelected = time == 7, onHour = onTime)
-        Hour(text = "8", hour = 8, isSelected = time == 8, onHour = onTime)
-        Hour(text = "9", hour = 9, isSelected = time == 9, onHour = onTime)
-        Hour(text = "10", hour = 10, isSelected = time == 10, onHour = onTime)
-        Hour(text = "11", hour = 11, isSelected = time == 11, onHour = onTime)
-        Hour(text = "12", hour = 12, isSelected = time == 12, onHour = onTime)
-        Hour(text = "13", hour = 13, isSelected = time == 13, onHour = onTime)
-        Hour(text = "14", hour = 14, isSelected = time == 14, onHour = onTime)
-        Hour(text = "15", hour = 15, isSelected = time == 15, onHour = onTime)
-        Hour(text = "16", hour = 16, isSelected = time == 16, onHour = onTime)
-        Hour(text = "17", hour = 17, isSelected = time == 17, onHour = onTime)
-        Hour(text = "18", hour = 18, isSelected = time == 18, onHour = onTime)
-        Hour(text = "19", hour = 19, isSelected = time == 19, onHour = onTime)
-        Hour(text = "20", hour = 20, isSelected = time == 20, onHour = onTime)
-        Hour(text = "21", hour = 21, isSelected = time == 21, onHour = onTime)
-        Hour(text = "22", hour = 22, isSelected = time == 22, onHour = onTime)
-        Hour(text = "23", hour = 23, isSelected = time == 23, onHour = onTime)
-//        Hour(text = "XII", hour = 0, onHour = { selectedHour = it })
-//        Hour(text = "I", hour = 1, onHour = { selectedHour = it })
-//        Hour(text = "II", hour = 2, onHour = { selectedHour = it })
-//        Hour(text = "III", hour = 3, onHour = { selectedHour = it })
-//        Hour(text = "IV", hour = 4, onHour = { selectedHour = it })
-//        Hour(text = "V", hour = 5, onHour = { selectedHour = it })
-//        Hour(text = "VI", hour = 6, onHour = { selectedHour = it })
-//        Hour(text = "VII", hour = 7, onHour = { selectedHour = it })
-//        Hour(text = "VIII", hour = 8, onHour = { selectedHour = it })
-//        Hour(text = "IX", hour = 9, onHour = { selectedHour = it })
-//        Hour(text = "X", hour = 10, onHour = { selectedHour = it })
-//        Hour(text = "XI", hour = 11, onHour = { selectedHour = it })
-//        Hour(text = "XII", hour = 12, onHour = { selectedHour = it })
-//        Hour(text = "I", hour = 13, onHour = { selectedHour = it })
-//        Hour(text = "II", hour = 14, onHour = { selectedHour = it })
-//        Hour(text = "III", hour = 15, onHour = { selectedHour = it })
-//        Hour(text = "IV", hour = 16, onHour = { selectedHour = it })
-//        Hour(text = "V", hour = 17, onHour = { selectedHour = it })
-//        Hour(text = "VI", hour = 18, onHour = { selectedHour = it })
-//        Hour(text = "VII", hour = 19, onHour = { selectedHour = it })
-//        Hour(text = "VIII", hour = 20, onHour = { selectedHour = it })
-//        Hour(text = "IX", hour = 21, onHour = { selectedHour = it })
-//        Hour(text = "X", hour = 22, onHour = { selectedHour = it })
-//        Hour(text = "XI", hour = 23, onHour = { selectedHour = it })
-    }
+    fun posY(index: Int) =
+        ((if (index < 12) radiusPx else radiusInsidePx) * sin(angleForIndex(index))).toInt()
 
     Box(modifier = modifier) {
         Surface(
@@ -243,10 +261,8 @@ fun Clock(
                     )
                 }
         ) { measurables, constraints ->
-            val placeables = measurables.map {
-                it.measure(constraints)
-            }
-            assert(placeables.count() == 24) { "Missing hours: should be 24, is ${placeables.count()}" }
+            val placeables = measurables.map { it.measure(constraints) }
+            assert(placeables.count() == 12 || placeables.count() == 24) { "Missing items: should be 12 or 24, is ${placeables.count()}" }
 
             layout(constraints.maxWidth, constraints.maxHeight) {
                 val size = constraints.maxWidth
@@ -267,11 +283,11 @@ fun Clock(
 }
 
 @Composable
-fun Hour(
+fun Mark(
     text: String,
-    hour: Int,
-    isSelected: Boolean,
-    onHour: (Int) -> Unit
+    index: Int, // 0..23
+    onIndex: (Int) -> Unit,
+    isSelected: Boolean
 ) {
     Text(
         text = text,
@@ -279,7 +295,7 @@ fun Hour(
         modifier = Modifier.clickable(
             interactionSource = remember { MutableInteractionSource() },
             indication = null,
-            onClick = { onHour(hour) }
+            onClick = { onIndex(index) }
         )
     )
 }
@@ -287,7 +303,7 @@ fun Hour(
 enum class TimePart { Hour, Minute }
 
 private const val step = PI * 2 / 12
-private fun angleForHour(hour: Int) = -PI / 2 + step * hour
+private fun angleForIndex(hour: Int) = -PI / 2 + step * hour
 
 @Preview(device = Devices.PIXEL_4, showSystemUi = true)
 @Composable
