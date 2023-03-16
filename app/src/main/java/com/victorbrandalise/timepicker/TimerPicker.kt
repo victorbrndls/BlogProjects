@@ -107,17 +107,8 @@ fun TimerPicker() {
 
         Row(
             horizontalArrangement = Arrangement.End,
-            modifier = Modifier.width(IntrinsicSize.Min)
+            modifier = Modifier.align(Alignment.End)
         ) {
-//            IconButton(onClick = { /*TODO*/ }) {
-//                Icon(
-//                    painter = painterResource(id = R.drawable.baseline_keyboard_black_24),
-//                    contentDescription = "Keyboard"
-//                )
-//            }
-
-            Spacer(modifier = Modifier.weight(1f, fill = false))
-
             TextButton(
                 onClick = { /*TODO*/ },
                 modifier = Modifier
