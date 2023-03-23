@@ -1,5 +1,6 @@
 package com.victorbrandalise
 
+import androidx.annotation.DrawableRes
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
@@ -31,10 +32,20 @@ import kotlinx.coroutines.flow.map
 import kotlin.math.abs
 import kotlin.math.absoluteValue
 
+data class Account(@DrawableRes val image: Int)
+
+private val accounts = listOf(
+    Account(image = R.drawable.goat),
+    Account(image = R.drawable.horse),
+    Account(image = R.drawable.monkey)
+)
+
 @Composable
 fun SearchBar(
     modifier: Modifier = Modifier
 ) {
+    var selectedAccount by remember { mutableStateOf(accounts[0]) }
+
     Card(
         shape = RoundedCornerShape(32.dp),
         colors = CardDefaults.cardColors(containerColor = Color(0xD22E2C37)),
@@ -58,58 +69,67 @@ fun SearchBar(
                 modifier = Modifier.weight(1f)
             )
 
-            AccountSwitcher()
+            AccountSwitcher(
+                accounts = accounts,
+                currentAccount = selectedAccount,
+                onAccountChanged = {
+                    println(it)
+                    selectedAccount = it
+                }
+            )
         }
     }
 }
 
-private val accounts = listOf(R.drawable.goat, R.drawable.horse, R.drawable.monkey)
-
 @Composable
-fun AccountSwitcher() {
-    val iconSize = 36.dp
-    val iconSizePx = with(LocalDensity.current) { iconSize.toPx() }
+fun AccountSwitcher(
+    accounts: List<Account>,
+    currentAccount: Account,
+    onAccountChanged: (Account) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    val imageSize = 36.dp
+    val imageSizePx = with(LocalDensity.current) { imageSize.toPx() }
 
-    var selectedAccountIndex by remember { mutableStateOf(0) }
+    val currentAccountIndex = accounts.indexOf(currentAccount)
     var nextAccountIndex by remember { mutableStateOf<Int?>(null) }
 
-    var delta by remember { mutableStateOf(0f) }
+    var delta by remember(currentAccountIndex) { mutableStateOf(0f) }
+    val draggableState = rememberDraggableState(onDelta = { delta = it })
 
     val targetAnimation = remember { Animatable(0f) }
 
-    LaunchedEffect(key1 = true) {
+    LaunchedEffect(key1 = currentAccountIndex) {
         snapshotFlow { delta }
             .filter { nextAccountIndex == null }
             .filter { it.absoluteValue > 1f }
             .throttleFirst(300)
             .map { delta ->
                 if (delta < 0) { // Scroll down (Bottom -> Top)
-                    if (selectedAccountIndex < accounts.size - 1) +1 else 0
+                    if (currentAccountIndex < accounts.size - 1) 1 else 0
                 } else { // Scroll up (Top -> Bottom)
-                    if (selectedAccountIndex > 0) -1 else 0
+                    if (currentAccountIndex > 0) -1 else 0
                 }
             }
             .filter { it != 0 }
             .collect { change ->
-                nextAccountIndex = selectedAccountIndex + change
+                nextAccountIndex = currentAccountIndex + change
 
                 targetAnimation.animateTo(
                     change.toFloat(),
                     animationSpec = tween(easing = LinearEasing, durationMillis = 200)
                 )
 
-                selectedAccountIndex = nextAccountIndex!!
+                onAccountChanged(accounts[nextAccountIndex!!])
                 nextAccountIndex = null
                 targetAnimation.snapTo(0f)
             }
     }
 
-    val draggableState = rememberDraggableState(onDelta = { delta = it })
-
-    Box(modifier = Modifier.size(iconSize)) {
+    Box(modifier = Modifier.size(imageSize)) {
         nextAccountIndex?.let { index ->
             Image(
-                painter = painterResource(id = accounts[index]),
+                painter = painterResource(id = accounts[index].image),
                 contentScale = ContentScale.Crop,
                 contentDescription = "Account image",
                 modifier = Modifier
@@ -122,7 +142,7 @@ fun AccountSwitcher() {
         }
 
         Image(
-            painter = painterResource(id = accounts[selectedAccountIndex]),
+            painter = painterResource(id = accounts[currentAccountIndex].image),
             contentScale = ContentScale.Crop,
             contentDescription = "Account image",
             modifier = Modifier
@@ -131,7 +151,7 @@ fun AccountSwitcher() {
                     orientation = Orientation.Vertical,
                 )
                 .graphicsLayer {
-                    this.translationY = targetAnimation.value * iconSizePx * -1.5f
+                    this.translationY = targetAnimation.value * imageSizePx * -1.5f
                 }
                 .clip(CircleShape) // has to be after graphicsLayer
         )
