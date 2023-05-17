@@ -32,11 +32,11 @@ fun CircularReveal() {
     ) {
         var visible by remember { mutableStateOf(false) }
 
-        val shapeA by animateFloatAsState(
+        val animationProgress by animateFloatAsState(
             targetValue = if (visible) 1f else 0f,
             animationSpec = tween(durationMillis = 200, easing = LinearEasing)
         )
-        val transition = updateTransition(targetState = shapeA, label = "")
+        val transition = updateTransition(targetState = animationProgress, label = "")
 
         val animatedShape by transition.animateValue(
             TwoWayConverter(
@@ -69,7 +69,7 @@ fun CircularReveal() {
             }
         }
 
-        if(shapeA != 0f) {
+        if(animationProgress != 0f) {
             BottomSheet(
                 modifier = Modifier
                     .padding(8.dp)
