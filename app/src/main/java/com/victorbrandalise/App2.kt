@@ -38,7 +38,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun BottomMenuBar(
     screens: List<Screen>,
-    currentDestinationHierarchy: List<String>,
+    currentScreen: Screen?,
     onNavigateTo: (Screen) -> Unit,
 ) {
     val backgroundShape = remember { menuBarShape() }
@@ -60,13 +60,13 @@ fun BottomMenuBar(
                 shape = RoundedCornerShape(50),
                 containerColor = Color.White,
                 contentColor = Color.Gray,
-                onClick = { },
+                onClick = {},
                 modifier = Modifier.clip(RoundedCornerShape(50))
             ) {
                 Row(
                     modifier = Modifier.size(64.dp)
                 ) {
-                    BottomBarItem(screens[2], currentDestinationHierarchy, onNavigateTo)
+                    BottomBarItem(screens[2], currentScreen, onNavigateTo)
                 }
             }
             Spacer(modifier = Modifier.height(30.dp))
@@ -77,13 +77,13 @@ fun BottomMenuBar(
                 .height(56.dp)
                 .align(Alignment.BottomCenter)
         ) {
-            BottomBarItem(screens[0], currentDestinationHierarchy, onNavigateTo)
-            BottomBarItem(screens[1], currentDestinationHierarchy, onNavigateTo)
+            BottomBarItem(screens[0], currentScreen, onNavigateTo)
+            BottomBarItem(screens[1], currentScreen, onNavigateTo)
 
             Spacer(modifier = Modifier.width(72.dp))
 
-            BottomBarItem(screens[3], currentDestinationHierarchy, onNavigateTo)
-            BottomBarItem(screens[4], currentDestinationHierarchy, onNavigateTo)
+            BottomBarItem(screens[3], currentScreen, onNavigateTo)
+            BottomBarItem(screens[4], currentScreen, onNavigateTo)
         }
     }
 }
@@ -91,10 +91,10 @@ fun BottomMenuBar(
 @Composable
 private fun RowScope.BottomBarItem(
     screen: Screen,
-    currentDestinationHierarchy: List<String>,
+    currentScreen: Screen?,
     onNavigateTo: (Screen) -> Unit,
 ) {
-    val selected = currentDestinationHierarchy.contains(screen.route)
+    val selected = currentScreen?.route == screen.route
 
     Box(
         Modifier
@@ -163,7 +163,7 @@ private fun menuBarShape() = GenericShape { size, _ ->
 @Preview(showSystemUi = true)
 @Composable
 private fun Preview() {
-    var currentDestination by remember { mutableStateOf("home") }
+    var currentScreen by remember { mutableStateOf<Screen?>(null) }
 
     Box(
         contentAlignment = Alignment.BottomCenter,
@@ -197,8 +197,8 @@ private fun Preview() {
                     selectedIcon = R.drawable.baseline_chat_24,
                 ),
             ),
-            currentDestinationHierarchy = listOf(currentDestination),
-            onNavigateTo = { currentDestination = it.route },
+            currentScreen = currentScreen,
+            onNavigateTo = { currentScreen = it },
         )
     }
 }
