@@ -138,12 +138,10 @@ private fun CameraContainer(
                 contentDescription = "Preview",
                 modifier = Modifier.fillMaxSize()
             )
-        } ?: run {
-            AndroidView(
-                { previewView },
-                modifier = Modifier.fillMaxSize()
-            )
-        }
+        } ?: AndroidView(
+            { previewView },
+            modifier = Modifier.fillMaxSize()
+        )
 
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
