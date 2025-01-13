@@ -221,9 +221,9 @@ private fun bindCamera(
     cameraProvider.unbindAll()
 
     try {
-        if (extensionsManager.isExtensionAvailable(cameraSelector, ExtensionMode.NIGHT)) {
+        if (extensionsManager.isExtensionAvailable(cameraSelector, ExtensionMode.BOKEH)) {
             val nightCameraSelector = extensionsManager.getExtensionEnabledCameraSelector(
-                cameraSelector, ExtensionMode.NIGHT
+                cameraSelector, ExtensionMode.BOKEH
             )
 
             cameraProvider.bindToLifecycle(
